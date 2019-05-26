@@ -192,9 +192,7 @@ class Razorbill : CanvasWatchFaceService() {
             complicationDrawables?.put(BOTTOM_COMPLICATION_ID, ComplicationDrawable(applicationContext))
             complicationDrawables?.put(LEFT_COMPLICATION_ID, ComplicationDrawable(applicationContext))
 
-
-            //setComplicationsActiveAndAmbientColors(mWatchHandHighlightColor)
-            //setActiveComplications(COMPLICATION_IDS)
+            setActiveComplications(*COMPLICATION_IDS)
         }
 
         override fun onDestroy() {
