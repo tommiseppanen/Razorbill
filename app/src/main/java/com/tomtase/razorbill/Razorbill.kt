@@ -206,6 +206,12 @@ class Razorbill : CanvasWatchFaceService() {
                     WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false)
             burnInProtection = properties.getBoolean(
                     WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
+
+            for (i in 0 until COMPLICATION_IDS.count()) {
+                val complicationDrawable = complicationDrawables?.get(COMPLICATION_IDS[i])
+                complicationDrawable?.setLowBitAmbient(lowBitAmbient)
+                complicationDrawable?.setBurnInProtection(burnInProtection)
+            }
         }
 
         override fun onTimeTick() {
