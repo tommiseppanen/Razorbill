@@ -292,11 +292,14 @@ class Razorbill : CanvasWatchFaceService() {
             minuteHandLength = (centerX * 0.98).toFloat()
             hourHandLength = (centerX * 0.65).toFloat()
 
+            //width and height are usually the same
             val sizeOfComplication = width / 4
             val midpointOfScreen = width / 2
 
             val horizontalOffset = (midpointOfScreen - sizeOfComplication) / 2
             val verticalOffset = midpointOfScreen - sizeOfComplication / 2
+
+            val bottomVerticalOffset = midpointOfScreen + sizeOfComplication/2
 
             val leftBounds =
                 Rect(
@@ -322,14 +325,14 @@ class Razorbill : CanvasWatchFaceService() {
 
             val bottomBounds =
                 Rect(
-                    midpointOfScreen + horizontalOffset,
-                    verticalOffset,
-                    midpointOfScreen + horizontalOffset + sizeOfComplication,
-                    verticalOffset + sizeOfComplication
+                    midpointOfScreen - sizeOfComplication/2,
+                    bottomVerticalOffset,
+                    midpointOfScreen + sizeOfComplication/2,
+                    bottomVerticalOffset + sizeOfComplication
                 )
 
-            val bottomtComplication = complicationDrawables?.get(BOTTOM_COMPLICATION_ID)
-            rightComplication?.bounds = rightBounds
+            val bottomComplication = complicationDrawables?.get(BOTTOM_COMPLICATION_ID)
+            bottomComplication?.bounds = bottomBounds
 
         }
 
