@@ -19,6 +19,12 @@ import android.view.SurfaceHolder
 import java.lang.ref.WeakReference
 import java.util.Calendar
 import java.util.TimeZone
+import android.support.wearable.complications.rendering.ComplicationDrawable
+import android.support.wearable.complications.ComplicationData
+import com.tomtase.razorbill.ConfigurationRecyclerViewAdapter.*
+import android.util.SparseArray
+
+
 
 
 private const val UPDATE_TIME_MESSAGE_ID = 0
@@ -30,6 +36,50 @@ private const val SECOND_TICK_STROKE_WIDTH = 2f
 private const val CENTER_GAP_AND_CIRCLE_RADIUS = 7f
 
 class Razorbill : CanvasWatchFaceService() {
+
+
+    private val RIGHT_COMPLICATION_ID = 100
+    private val BOTTOM_COMPLICATION_ID = 101
+    private val LEFT_COMPLICATION_ID = 102
+
+    private val COMPLICATION_IDS = intArrayOf(RIGHT_COMPLICATION_ID, BOTTOM_COMPLICATION_ID, LEFT_COMPLICATION_ID)
+
+    private val SUPPORTED_TYPES = intArrayOf(
+        ComplicationData.TYPE_RANGED_VALUE,
+        ComplicationData.TYPE_ICON,
+        ComplicationData.TYPE_SHORT_TEXT,
+        ComplicationData.TYPE_SMALL_IMAGE
+    )
+
+    private val COMPLICATION_SUPPORTED_TYPES = arrayOf(
+        SUPPORTED_TYPES, SUPPORTED_TYPES, SUPPORTED_TYPES
+    )
+
+    fun getComplicationId(
+        complicationLocation: ComplicationLocation
+    ): Int {
+        when (complicationLocation) {
+            ComplicationLocation.RIGHT -> return RIGHT_COMPLICATION_ID
+            ComplicationLocation.BOTTOM -> return BOTTOM_COMPLICATION_ID
+            ComplicationLocation.LEFT -> return LEFT_COMPLICATION_ID
+            else -> return -1
+        }
+    }
+
+    fun getComplicationIds(): IntArray {
+        return COMPLICATION_IDS
+    }
+
+    fun getSupportedComplicationTypes(
+        complicationLocation: ComplicationLocation
+    ): IntArray {
+        when (complicationLocation) {
+            ComplicationLocation.RIGHT -> return COMPLICATION_SUPPORTED_TYPES[0]
+            ComplicationLocation.BOTTOM  -> return COMPLICATION_SUPPORTED_TYPES[1]
+            ComplicationLocation.LEFT -> return COMPLICATION_SUPPORTED_TYPES[2]
+            else -> return intArrayOf()
+        }
+    }
 
     override fun onCreateEngine(): RazorbillEngine {
         return RazorbillEngine()
@@ -84,6 +134,8 @@ class Razorbill : CanvasWatchFaceService() {
                 invalidate()
             }
         }
+
+        private val complicationDrawables: SparseArray<ComplicationDrawable>? = null
 
         override fun onCreate(holder: SurfaceHolder) {
             super.onCreate(holder)
@@ -205,6 +257,7 @@ class Razorbill : CanvasWatchFaceService() {
 
             //Clear the background
             canvas.drawColor(Color.BLACK)
+            drawComplications(canvas, now);
             drawWatchFace(canvas)
         }
 
@@ -261,6 +314,14 @@ class Razorbill : CanvasWatchFaceService() {
                 centerY + endCapRadius, endCapRadius,
                 endCapRadius, paint
             )
+        }
+
+        private fun drawComplications(canvas: Canvas, currentTimeMillis: Long) {
+            for (i in 0 until COMPLICATION_IDS.count()) {
+                var complicationId = COMPLICATION_IDS[i]
+                var complicationDrawable = complicationDrawables?.get(complicationId)
+                complicationDrawable?.draw(canvas, currentTimeMillis)
+            }
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
