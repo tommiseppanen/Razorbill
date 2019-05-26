@@ -33,7 +33,7 @@ private const val INTERACTIVE_MODE_UPDATE_RATE = 1000
 private const val HOUR_STROKE_WIDTH = 3f
 private const val MINUTE_STROKE_WIDTH = 3f
 private const val SECOND_TICK_STROKE_WIDTH = 2f
-private const val CENTER_GAP_AND_CIRCLE_RADIUS = 7f
+private const val CENTER_GAP_AND_CIRCLE_RADIUS = 8f
 
 class Razorbill : CanvasWatchFaceService() {
 
@@ -262,9 +262,9 @@ class Razorbill : CanvasWatchFaceService() {
         }
 
         private fun drawWatchFace(canvas: Canvas) {
-            val innerTickRadius = centerX - 10
             val outerTickRadius = centerX
             for (tickIndex in 0..11) {
+                var innerTickRadius = if (tickIndex % 3 == 0) { centerX - 15 } else {centerX - 10}
                 val tickRot = (tickIndex.toDouble() * Math.PI * 2.0 / 12).toFloat()
                 val innerX = Math.sin(tickRot.toDouble()).toFloat() * innerTickRadius
                 val innerY = (-Math.cos(tickRot.toDouble())).toFloat() * innerTickRadius
