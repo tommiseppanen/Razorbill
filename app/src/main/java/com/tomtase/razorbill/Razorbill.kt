@@ -291,6 +291,46 @@ class Razorbill : CanvasWatchFaceService() {
             secondHandLength = centerX
             minuteHandLength = (centerX * 0.98).toFloat()
             hourHandLength = (centerX * 0.65).toFloat()
+
+            val sizeOfComplication = width / 4
+            val midpointOfScreen = width / 2
+
+            val horizontalOffset = (midpointOfScreen - sizeOfComplication) / 2
+            val verticalOffset = midpointOfScreen - sizeOfComplication / 2
+
+            val leftBounds =
+                Rect(
+                    horizontalOffset,
+                    verticalOffset,
+                    horizontalOffset + sizeOfComplication,
+                    verticalOffset + sizeOfComplication
+                )
+
+            val leftComplication = complicationDrawables?.get(LEFT_COMPLICATION_ID)
+            leftComplication?.bounds = leftBounds
+
+            val rightBounds =
+                Rect(
+                    midpointOfScreen + horizontalOffset,
+                    verticalOffset,
+                    midpointOfScreen + horizontalOffset + sizeOfComplication,
+                    verticalOffset + sizeOfComplication
+                )
+
+            val rightComplication = complicationDrawables?.get(RIGHT_COMPLICATION_ID)
+            rightComplication?.bounds = rightBounds
+
+            val bottomBounds =
+                Rect(
+                    midpointOfScreen + horizontalOffset,
+                    verticalOffset,
+                    midpointOfScreen + horizontalOffset + sizeOfComplication,
+                    verticalOffset + sizeOfComplication
+                )
+
+            val bottomtComplication = complicationDrawables?.get(BOTTOM_COMPLICATION_ID)
+            rightComplication?.bounds = rightBounds
+
         }
 
         override fun onDraw(canvas: Canvas, bounds: Rect) {
