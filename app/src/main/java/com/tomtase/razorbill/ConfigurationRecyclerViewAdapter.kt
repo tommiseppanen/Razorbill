@@ -17,37 +17,40 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         LEFT
     }
 
-    private val settings: ArrayList<ConfigItemType>? = null
-    private val previewViewHolder: PreviewViewHolder? = null
+    //private val settings: ArrayList<ConfigItemType>? = null
+    private var previewViewHolder: PreviewViewHolder? = null
 
     override fun getItemCount(): Int {
-        if (settings != null) {
+        /*if (settings != null) {
             return settings.count()
         }
-        return 0
+        return 0*/
+        return 1
     }
 
     override fun getItemViewType(position: Int): Int {
-        val configItemType = settings.get(position)
-        return configItemType.getConfigType()
+        //val configItemType = settings.get(position)
+        //return configItemType.getConfigType()
+        return TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG
     }
 
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val configItemType = settings.get(position)
+        //val configItemType = settings.get(position)
 
         when (viewHolder.itemViewType) {
             TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG -> {
                 val previewAndComplicationsViewHolder = viewHolder as PreviewViewHolder
 
-                val previewAndComplicationsConfigItem = configItemType as ConfigItem
+                //val previewAndComplicationsConfigItem = configItemType as ConfigItem
 
-                val defaultComplicationResourceId = previewAndComplicationsConfigItem.getDefaultComplicationResourceId()
+                //val defaultComplicationResourceId = previewAndComplicationsConfigItem.getDefaultComplicationResourceId()
                 previewAndComplicationsViewHolder.setDefaultComplicationDrawable(
-                    defaultComplicationResourceId
+                    //defaultComplicationResourceId
+                    R.drawable.add_complication
                 )
 
-                previewAndComplicationsViewHolder.initializesColorsAndComplications()
+                previewAndComplicationsViewHolder.initializeComplications()
             }
 
         }
@@ -64,7 +67,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                             false
                         )
                 )
-                return previewViewHolder
+                return previewViewHolder as PreviewViewHolder
             }
         }
         return null;

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Razorbill</string>
+    <string name="add_complication">Add Complication</string>
+    <string name="edit_complication">Edit Complication</string>
 </resources>

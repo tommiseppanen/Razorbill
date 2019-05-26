@@ -38,47 +38,44 @@ private const val SHORT_TICK_LENGTH = 8
 
 class Razorbill : CanvasWatchFaceService() {
 
+    companion object {
+        private val RIGHT_COMPLICATION_ID = 100
+        private val BOTTOM_COMPLICATION_ID = 101
+        private val LEFT_COMPLICATION_ID = 102
 
-    private val RIGHT_COMPLICATION_ID = 100
-    private val BOTTOM_COMPLICATION_ID = 101
-    private val LEFT_COMPLICATION_ID = 102
+        private val COMPLICATION_IDS = intArrayOf(RIGHT_COMPLICATION_ID, BOTTOM_COMPLICATION_ID, LEFT_COMPLICATION_ID)
 
-    private val COMPLICATION_IDS = intArrayOf(RIGHT_COMPLICATION_ID, BOTTOM_COMPLICATION_ID, LEFT_COMPLICATION_ID)
+        private val SUPPORTED_TYPES = intArrayOf(
+            ComplicationData.TYPE_RANGED_VALUE,
+            ComplicationData.TYPE_ICON,
+            ComplicationData.TYPE_SHORT_TEXT,
+            ComplicationData.TYPE_SMALL_IMAGE
+        )
 
-    private val SUPPORTED_TYPES = intArrayOf(
-        ComplicationData.TYPE_RANGED_VALUE,
-        ComplicationData.TYPE_ICON,
-        ComplicationData.TYPE_SHORT_TEXT,
-        ComplicationData.TYPE_SMALL_IMAGE
-    )
+        private val COMPLICATION_SUPPORTED_TYPES = arrayOf(
+            SUPPORTED_TYPES, SUPPORTED_TYPES, SUPPORTED_TYPES
+        )
 
-    private val COMPLICATION_SUPPORTED_TYPES = arrayOf(
-        SUPPORTED_TYPES, SUPPORTED_TYPES, SUPPORTED_TYPES
-    )
-
-    fun getComplicationId(
-        complicationLocation: ComplicationLocation
-    ): Int {
-        when (complicationLocation) {
-            ComplicationLocation.RIGHT -> return RIGHT_COMPLICATION_ID
-            ComplicationLocation.BOTTOM -> return BOTTOM_COMPLICATION_ID
-            ComplicationLocation.LEFT -> return LEFT_COMPLICATION_ID
-            else -> return -1
+        fun getComplicationId(complicationLocation: ComplicationLocation): Int {
+            when (complicationLocation) {
+                ComplicationLocation.RIGHT -> return RIGHT_COMPLICATION_ID
+                ComplicationLocation.BOTTOM -> return BOTTOM_COMPLICATION_ID
+                ComplicationLocation.LEFT -> return LEFT_COMPLICATION_ID
+                else -> return -1
+            }
         }
-    }
 
-    fun getComplicationIds(): IntArray {
-        return COMPLICATION_IDS
-    }
+        fun getComplicationIds(): IntArray {
+            return COMPLICATION_IDS
+        }
 
-    fun getSupportedComplicationTypes(
-        complicationLocation: ComplicationLocation
-    ): IntArray {
-        when (complicationLocation) {
-            ComplicationLocation.RIGHT -> return COMPLICATION_SUPPORTED_TYPES[0]
-            ComplicationLocation.BOTTOM  -> return COMPLICATION_SUPPORTED_TYPES[1]
-            ComplicationLocation.LEFT -> return COMPLICATION_SUPPORTED_TYPES[2]
-            else -> return intArrayOf()
+        fun getSupportedComplicationTypes(complicationLocation: ComplicationLocation): IntArray {
+            when (complicationLocation) {
+                ComplicationLocation.RIGHT -> return COMPLICATION_SUPPORTED_TYPES[0]
+                ComplicationLocation.BOTTOM  -> return COMPLICATION_SUPPORTED_TYPES[1]
+                ComplicationLocation.LEFT -> return COMPLICATION_SUPPORTED_TYPES[2]
+                else -> return intArrayOf()
+            }
         }
     }
 
