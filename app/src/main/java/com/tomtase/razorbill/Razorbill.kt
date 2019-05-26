@@ -24,6 +24,7 @@ import android.support.wearable.complications.ComplicationData
 import com.tomtase.razorbill.ConfigurationRecyclerViewAdapter.*
 import android.util.SparseArray
 
+
 private const val UPDATE_TIME_MESSAGE_ID = 0
 private const val INTERACTIVE_MODE_UPDATE_RATE = 1000
 
@@ -135,7 +136,7 @@ class Razorbill : CanvasWatchFaceService() {
             }
         }
 
-        private val complicationDrawables: SparseArray<ComplicationDrawable>? = null
+        private var complicationDrawables: SparseArray<ComplicationDrawable>? = null
 
         override fun onCreate(holder: SurfaceHolder) {
             super.onCreate(holder)
@@ -146,6 +147,7 @@ class Razorbill : CanvasWatchFaceService() {
 
             calendar = Calendar.getInstance()
             initializePaints()
+            initializeComplications()
         }
 
         private fun initializePaints() {
@@ -181,6 +183,18 @@ class Razorbill : CanvasWatchFaceService() {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
             }
+        }
+
+        private fun initializeComplications() {
+            complicationDrawables = SparseArray(COMPLICATION_IDS.count())
+
+            complicationDrawables?.put(RIGHT_COMPLICATION_ID, ComplicationDrawable(applicationContext))
+            complicationDrawables?.put(BOTTOM_COMPLICATION_ID, ComplicationDrawable(applicationContext))
+            complicationDrawables?.put(LEFT_COMPLICATION_ID, ComplicationDrawable(applicationContext))
+
+
+            //setComplicationsActiveAndAmbientColors(mWatchHandHighlightColor)
+            //setActiveComplications(COMPLICATION_IDS)
         }
 
         override fun onDestroy() {
