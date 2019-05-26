@@ -24,9 +24,6 @@ import android.support.wearable.complications.ComplicationData
 import com.tomtase.razorbill.ConfigurationRecyclerViewAdapter.*
 import android.util.SparseArray
 
-
-
-
 private const val UPDATE_TIME_MESSAGE_ID = 0
 private const val INTERACTIVE_MODE_UPDATE_RATE = 1000
 
@@ -34,6 +31,9 @@ private const val HOUR_STROKE_WIDTH = 3f
 private const val MINUTE_STROKE_WIDTH = 3f
 private const val SECOND_TICK_STROKE_WIDTH = 2f
 private const val CENTER_GAP_AND_CIRCLE_RADIUS = 8f
+private const val LONG_TICK_LENGTH = 15
+private const val SHORT_TICK_LENGTH = 8
+
 
 class Razorbill : CanvasWatchFaceService() {
 
@@ -264,7 +264,8 @@ class Razorbill : CanvasWatchFaceService() {
         private fun drawWatchFace(canvas: Canvas) {
             val outerTickRadius = centerX
             for (tickIndex in 0..11) {
-                var innerTickRadius = if (tickIndex % 3 == 0) { centerX - 15 } else {centerX - 10}
+                var innerTickRadius = if (tickIndex % 3 == 0) { centerX - LONG_TICK_LENGTH }
+                    else {centerX - SHORT_TICK_LENGTH}
                 val tickRot = (tickIndex.toDouble() * Math.PI * 2.0 / 12).toFloat()
                 val innerX = Math.sin(tickRot.toDouble()).toFloat() * innerTickRadius
                 val innerY = (-Math.cos(tickRot.toDouble())).toFloat() * innerTickRadius
