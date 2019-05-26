@@ -207,10 +207,29 @@ class Razorbill : CanvasWatchFaceService() {
             burnInProtection = properties.getBoolean(
                     WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
 
-            for (i in 0 until COMPLICATION_IDS.count()) {
-                val complicationDrawable = complicationDrawables?.get(COMPLICATION_IDS[i])
+            for (id in COMPLICATION_IDS) {
+                val complicationDrawable = complicationDrawables?.get(id)
                 complicationDrawable?.setLowBitAmbient(lowBitAmbient)
                 complicationDrawable?.setBurnInProtection(burnInProtection)
+            }
+        }
+
+        override fun onComplicationDataUpdate(complicationId: Int, complicationData: ComplicationData?) {
+            val complicationDrawable = complicationDrawables?.get(complicationId)
+            complicationDrawable?.setComplicationData(complicationData)
+            invalidate()
+        }
+
+        override fun onTapCommand(tapType: Int, x: Int, y: Int, eventTime: Long) {
+            when (tapType) {
+                TAP_TYPE_TAP ->
+                    for (id in COMPLICATION_IDS) {
+                        val complicationDrawable = complicationDrawables?.get(id)
+                        val successfulTap = complicationDrawable?.onTap(x, y)
+                        if (successfulTap == true) {
+                            return
+                        }
+                    }
             }
         }
 
@@ -336,9 +355,8 @@ class Razorbill : CanvasWatchFaceService() {
         }
 
         private fun drawComplications(canvas: Canvas, currentTimeMillis: Long) {
-            for (i in 0 until COMPLICATION_IDS.count()) {
-                var complicationId = COMPLICATION_IDS[i]
-                var complicationDrawable = complicationDrawables?.get(complicationId)
+            for (id in COMPLICATION_IDS) {
+                val complicationDrawable = complicationDrawables?.get(id)
                 complicationDrawable?.draw(canvas, currentTimeMillis)
             }
         }
