@@ -242,6 +242,11 @@ class Razorbill : CanvasWatchFaceService() {
             super.onAmbientModeChanged(inAmbientMode)
             ambient = inAmbientMode
 
+            for (id in COMPLICATION_IDS) {
+                val complicationDrawable = complicationDrawables?.get(id)
+                complicationDrawable?.setInAmbientMode(ambient)
+            }
+
             updateWatchHandStyle()
             updateTimer()
         }
