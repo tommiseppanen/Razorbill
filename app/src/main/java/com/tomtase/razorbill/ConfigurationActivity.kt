@@ -18,7 +18,7 @@ class ConfigurationActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_analog_complication_config)
+        setContentView(R.layout.complication_config)
 
         mAdapter = ConfigurationRecyclerViewAdapter()
 

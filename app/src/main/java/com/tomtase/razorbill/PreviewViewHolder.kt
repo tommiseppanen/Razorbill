@@ -35,12 +35,12 @@ class PreviewViewHolder : RecyclerView.ViewHolder {
         // Sets up left complication preview.
         mLeftComplicationBackground = view.findViewById(R.id.left_complication_background) as ImageView
         mLeftComplication = view.findViewById(R.id.left_complication)
-        mLeftComplication?.setOnClickListener(this)
+        //mLeftComplication?.setOnClickListener(this)
 
         // Sets up right complication preview.
         mRightComplicationBackground = view.findViewById(R.id.right_complication_background) as ImageView
         mRightComplication = view.findViewById(R.id.right_complication)
-        mRightComplication?.setOnClickListener(this)
+        //mRightComplication?.setOnClickListener(this)
     }
 
     fun onClick(view: View) {

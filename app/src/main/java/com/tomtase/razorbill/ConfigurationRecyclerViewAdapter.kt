@@ -70,6 +70,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                 return previewViewHolder as PreviewViewHolder
             }
         }
-        return null;
+        return PreviewViewHolder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.config_list_preview, parent, false))
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="preview_size">180dp</dimen>
     <dimen name="preview_background_padding">16dp</dimen>
+    <dimen name="activity_config_padding">24dp</dimen>
 </resources>
