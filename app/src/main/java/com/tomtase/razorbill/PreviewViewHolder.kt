@@ -2,7 +2,6 @@ package com.tomtase.razorbill
 
 import android.support.v7.widget.RecyclerView
 import android.support.wearable.complications.ComplicationProviderInfo
-import android.R
 import android.widget.ImageButton
 import android.support.wearable.complications.ComplicationHelperActivity
 import android.content.ComponentName
@@ -30,7 +29,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder {
         mWatchFaceArmsAndTicksView = view.findViewById(R.id.watch_face_arms_and_ticks)
 
         // In our case, just the second arm.
-        mWatchFaceHighlightPreviewView = view.findViewById(R.id.watch_face_highlight)
+        //mWatchFaceHighlightPreviewView = view.findViewById(R.id.watch_face_highlight)
 
         // Sets up left complication preview.
         mLeftComplicationBackground = view.findViewById(R.id.left_complication_background) as ImageView

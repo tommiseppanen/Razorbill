@@ -2,7 +2,6 @@ package com.tomtase.razorbill
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.R
 import android.view.LayoutInflater
 
 

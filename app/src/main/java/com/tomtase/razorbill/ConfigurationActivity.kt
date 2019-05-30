@@ -4,7 +4,6 @@ import android.support.wearable.complications.ProviderChooserIntent
 import android.support.wearable.complications.ComplicationProviderInfo
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.R
 import android.support.wearable.view.WearableRecyclerView
 import android.os.Bundle
 import android.app.Activity
@@ -18,11 +17,12 @@ class ConfigurationActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //ComplicationConfi
         setContentView(R.layout.complication_config)
 
         mAdapter = ConfigurationRecyclerViewAdapter()
 
-        mWearableRecyclerView = findViewById(R.id.wearable_recycler_view) as WearableRecyclerView
+        mWearableRecyclerView = findViewById<WearableRecyclerView>(R.id.wearable_recycler_view)
 
         //mWearableRecyclerView!!.setEdgeItemsCenteringEnabled(true)
 
