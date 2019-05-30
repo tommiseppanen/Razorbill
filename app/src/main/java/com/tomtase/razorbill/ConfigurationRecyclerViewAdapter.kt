@@ -5,9 +5,6 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.support.wearable.complications.ComplicationProviderInfo
 
-
-
-
 const val TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG = 0
 
 class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -22,7 +19,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
     private var previewViewHolder: PreviewViewHolder? = null
 
 
-    fun updateSelectedComplication(complicationProviderInfo: ComplicationProviderInfo) {
+    fun updateSelectedComplication(complicationProviderInfo: ComplicationProviderInfo?) {
         if (previewViewHolder != null && previewViewHolder?.selectedComplicationId!! >= 0) {
             previewViewHolder?.updateComplicationViews(
                 previewViewHolder?.selectedComplicationId!!, complicationProviderInfo
@@ -43,15 +40,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         when (viewHolder.itemViewType) {
             TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG -> {
                 val previewAndComplicationsViewHolder = viewHolder as PreviewViewHolder
-
-                //val previewAndComplicationsConfigItem = configItemType as ConfigItem
-
-                //val defaultComplicationResourceId = previewAndComplicationsConfigItem.getDefaultComplicationResourceId()
-                previewAndComplicationsViewHolder.setDefaultComplicationDrawable(
-                    //defaultComplicationResourceId
-                    R.drawable.add_complication
-                )
-
+                previewAndComplicationsViewHolder.setDefaultComplicationDrawable(R.drawable.add_complication)
                 previewAndComplicationsViewHolder.initializeComplications()
             }
 
