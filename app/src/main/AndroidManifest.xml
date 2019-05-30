@@ -45,6 +45,8 @@
             </intent-filter>
         </service>
 
+        <activity android:name="android.support.wearable.complications.ComplicationHelperActivity"/>
+
         <activity
                 android:name=".ConfigurationActivity"
                 android:label="@string/configuration">
