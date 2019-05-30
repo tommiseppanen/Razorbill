@@ -12,42 +12,36 @@ import android.view.View
 import android.widget.ImageView
 
 
-class PreviewViewHolder : RecyclerView.ViewHolder {
-    private var mWatchFaceArmsAndTicksView: View? = null
-    private var mWatchFaceHighlightPreviewView: View? = null
+class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
+    private var watchFace: View? = null
 
-    private var mLeftComplicationBackground: ImageView? = null
-    private var mRightComplicationBackground: ImageView? = null
+    private var leftComplicationBackground: ImageView? = null
+    private var rightComplicationBackground: ImageView? = null
 
-    private var mLeftComplication: ImageButton? = null
-    private var mRightComplication: ImageButton? = null
+    private var leftComplication: ImageButton? = null
+    private var rightComplication: ImageButton? = null
 
-    private var mDefaultComplicationDrawable: Drawable? = null
+    private var defaultComplicationDrawable: Drawable? = null
 
     constructor(view: View) : super(view) {
 
-        mWatchFaceArmsAndTicksView = view.findViewById(R.id.watch_face_arms_and_ticks)
+        watchFace = view.findViewById(R.id.watch_face)
 
-        // In our case, just the second arm.
-        //mWatchFaceHighlightPreviewView = view.findViewById(R.id.watch_face_highlight)
+        leftComplicationBackground = view.findViewById(R.id.left_complication_background) as ImageView
+        leftComplication = view.findViewById(R.id.left_complication)
+        leftComplication?.setOnClickListener(this)
 
-        // Sets up left complication preview.
-        mLeftComplicationBackground = view.findViewById(R.id.left_complication_background) as ImageView
-        mLeftComplication = view.findViewById(R.id.left_complication)
-        //mLeftComplication?.setOnClickListener(this)
-
-        // Sets up right complication preview.
-        mRightComplicationBackground = view.findViewById(R.id.right_complication_background) as ImageView
-        mRightComplication = view.findViewById(R.id.right_complication)
-        //mRightComplication?.setOnClickListener(this)
+        rightComplicationBackground = view.findViewById(R.id.right_complication_background) as ImageView
+        rightComplication = view.findViewById(R.id.right_complication)
+        rightComplication?.setOnClickListener(this)
     }
 
-    fun onClick(view: View) {
-        if (view == mLeftComplication) {
+    override fun onClick(view: View) {
+        if (view == leftComplication) {
             val currentActivity = view.context as Activity
             launchComplicationHelperActivity(currentActivity, ComplicationLocation.LEFT)
 
-        } else if (view == mRightComplication) {
+        } else if (view == rightComplication) {
             val currentActivity = view.context as Activity
             launchComplicationHelperActivity(currentActivity, ComplicationLocation.RIGHT)
         }
@@ -81,28 +75,28 @@ class PreviewViewHolder : RecyclerView.ViewHolder {
     }
 
     fun setDefaultComplicationDrawable(resourceId: Int) {
-        val context = mWatchFaceArmsAndTicksView?.context
-        mDefaultComplicationDrawable = context?.getDrawable(resourceId)
+        val context = watchFace?.context
+        defaultComplicationDrawable = context?.getDrawable(resourceId)
 
-        mLeftComplication?.setImageDrawable(mDefaultComplicationDrawable)
-        mLeftComplicationBackground?.visibility = View.INVISIBLE
+        leftComplication?.setImageDrawable(defaultComplicationDrawable)
+        leftComplicationBackground?.visibility = View.INVISIBLE
 
-        mRightComplication?.setImageDrawable(mDefaultComplicationDrawable)
-        mRightComplicationBackground?.visibility = View.INVISIBLE
+        rightComplication?.setImageDrawable(defaultComplicationDrawable)
+        rightComplicationBackground?.visibility = View.INVISIBLE
     }
 
     /*fun updateComplicationViews(watchFaceComplicationId: Int, complicationProviderInfo: ComplicationProviderInfo?) {
 
         if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.LEFT)) {
             updateComplicationView(
-                complicationProviderInfo, mLeftComplication,
-                mLeftComplicationBackground
+                complicationProviderInfo, leftComplication,
+                leftComplicationBackground
             )
 
         } else if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.RIGHT)) {
             updateComplicationView(
-                complicationProviderInfo, mRightComplication,
-                mRightComplicationBackground
+                complicationProviderInfo, rightComplication,
+                rightComplicationBackground
             )
         }
     }*/
@@ -120,7 +114,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder {
             )*/
             background.setVisibility(View.VISIBLE)
         } else {
-            button.setImageDrawable(mDefaultComplicationDrawable)
+            button.setImageDrawable(defaultComplicationDrawable)
             //button.contentDescription = mContext.getString(R.string.add_complication)
             background.setVisibility(View.INVISIBLE)
         }
