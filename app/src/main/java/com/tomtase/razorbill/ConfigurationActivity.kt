@@ -30,7 +30,7 @@ class ConfigurationActivity : Activity() {
             val complicationProviderInfo =
                 data.getParcelableExtra<ComplicationProviderInfo>(ProviderChooserIntent.EXTRA_PROVIDER_INFO)
 
-            //adapter!!.updateSelectedComplication(complicationProviderInfo)
+            adapter!!.updateSelectedComplication(complicationProviderInfo)
 
         }
     }

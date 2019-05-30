@@ -7,12 +7,17 @@ import android.support.wearable.complications.ComplicationHelperActivity
 import android.content.ComponentName
 import com.tomtase.razorbill.ConfigurationRecyclerViewAdapter.ComplicationLocation
 import android.app.Activity
+import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.wearable.complications.ProviderInfoRetriever
 import android.view.View
 import android.widget.ImageView
+import java.util.concurrent.Executors
 
 
 class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
+    var selectedComplicationId: Int = 0
+
     private var watchFace: View? = null
 
     private var leftComplicationBackground: ImageView? = null
@@ -22,6 +27,10 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
     private var rightComplication: ImageButton? = null
 
     private var defaultComplicationDrawable: Drawable? = null
+
+    private var providerInfoRetriever: ProviderInfoRetriever? = null
+    private var mWatchFaceComponentName: ComponentName? = null
+    //private var mContext: Context? = null
 
     constructor(view: View) : super(view) {
 
@@ -34,6 +43,18 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         rightComplicationBackground = view.findViewById(R.id.right_complication_background) as ImageView
         rightComplication = view.findViewById(R.id.right_complication)
         rightComplication?.setOnClickListener(this)
+
+        //mContext = view.context
+        mWatchFaceComponentName = ComponentName(view.context, "Razorbill")
+
+        providerInfoRetriever = ProviderInfoRetriever(view.context, Executors.newCachedThreadPool())
+        providerInfoRetriever?.init()
+    }
+
+    /*override*/ fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        //super@PreviewViewHolder.onDetachedFromRecyclerView(recyclerView)
+        // Required to release retriever for active complication data on detach.
+        providerInfoRetriever?.release()
     }
 
     override fun onClick(view: View) {
@@ -47,19 +68,15 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         }
     }
 
-    private fun launchComplicationHelperActivity(
-        currentActivity: Activity, complicationLocation: ComplicationLocation
-    ) {
+    private fun launchComplicationHelperActivity(currentActivity: Activity,
+                                                 complicationLocation: ComplicationLocation) {
 
-        val selectedComplicationId = Razorbill.getComplicationId(complicationLocation)
+        selectedComplicationId = Razorbill.getComplicationId(complicationLocation)
 
         if (selectedComplicationId >= 0) {
 
             val supportedTypes = Razorbill.getSupportedComplicationTypes(complicationLocation)
-
-            val watchFace = ComponentName(
-                currentActivity, Razorbill::class.java!!
-            )
+            val watchFace = ComponentName(currentActivity, Razorbill::class.java!!)
 
             currentActivity.startActivityForResult(
                 ComplicationHelperActivity.createProviderChooserHelperIntent(
@@ -85,60 +102,45 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         rightComplicationBackground?.visibility = View.INVISIBLE
     }
 
-    /*fun updateComplicationViews(watchFaceComplicationId: Int, complicationProviderInfo: ComplicationProviderInfo?) {
+    fun updateComplicationViews(watchFaceComplicationId: Int, complicationProviderInfo: ComplicationProviderInfo?) {
 
         if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.LEFT)) {
-            updateComplicationView(
-                complicationProviderInfo, leftComplication,
-                leftComplicationBackground
-            )
-
+            updateComplicationView(complicationProviderInfo, leftComplication, leftComplicationBackground)
         } else if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.RIGHT)) {
-            updateComplicationView(
-                complicationProviderInfo, rightComplication,
-                rightComplicationBackground
-            )
+            updateComplicationView(complicationProviderInfo, rightComplication, rightComplicationBackground)
         }
-    }*/
+    }
 
-    private fun updateComplicationView(
-        complicationProviderInfo: ComplicationProviderInfo?,
-        button: ImageButton, background: ImageView
-    ) {
+    private fun updateComplicationView(complicationProviderInfo: ComplicationProviderInfo?,
+        button: ImageButton?, background: ImageView?) {
         if (complicationProviderInfo != null) {
-            button.setImageIcon(complicationProviderInfo.providerIcon)
+            button?.setImageIcon(complicationProviderInfo.providerIcon)
             /*button.contentDescription = mContext.getString(
                 R.string.edit_complication,
                 complicationProviderInfo.appName + " " +
                         complicationProviderInfo.providerName
             )*/
-            background.setVisibility(View.VISIBLE)
+            background?.visibility = View.VISIBLE
         } else {
-            button.setImageDrawable(defaultComplicationDrawable)
+            button?.setImageDrawable(defaultComplicationDrawable)
             //button.contentDescription = mContext.getString(R.string.add_complication)
-            background.setVisibility(View.INVISIBLE)
+            background?.visibility = View.INVISIBLE
         }
     }
 
     fun initializeComplications() {
 
-        /*val complicationIds = Razorbill.getComplicationIds()
+        val complicationIds = Razorbill.getComplicationIds()
 
-        providerInfoRetriever.retrieveProviderInfo(
-            object : OnProviderInfoReceivedCallback() {
-                override fun onProviderInfoReceived(
-                    watchFaceComplicationId: Int,
-                    complicationProviderInfo: ComplicationProviderInfo?
-                ) {
-
-
-                    updateComplicationViews(
-                        watchFaceComplicationId, complicationProviderInfo
-                    )
+        providerInfoRetriever?.retrieveProviderInfo(
+            object : ProviderInfoRetriever.OnProviderInfoReceivedCallback() {
+                 override fun onProviderInfoReceived(watchFaceComplicationId: Int,
+                                                     complicationProviderInfo: ComplicationProviderInfo?) {
+                    updateComplicationViews(watchFaceComplicationId, complicationProviderInfo)
                 }
             },
             mWatchFaceComponentName,
-            complicationIds
-        )*/
+            *complicationIds
+        )
     }
 }

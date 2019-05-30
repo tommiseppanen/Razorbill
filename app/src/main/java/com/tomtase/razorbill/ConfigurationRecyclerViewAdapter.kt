@@ -3,6 +3,9 @@ package com.tomtase.razorbill
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.LayoutInflater
+import android.support.wearable.complications.ComplicationProviderInfo
+
+
 
 
 const val TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG = 0
@@ -17,6 +20,15 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private var previewViewHolder: PreviewViewHolder? = null
+
+
+    fun updateSelectedComplication(complicationProviderInfo: ComplicationProviderInfo) {
+        if (previewViewHolder != null && previewViewHolder?.selectedComplicationId!! >= 0) {
+            previewViewHolder?.updateComplicationViews(
+                previewViewHolder?.selectedComplicationId!!, complicationProviderInfo
+            )
+        }
+    }
 
     override fun getItemCount(): Int {
         return 1
