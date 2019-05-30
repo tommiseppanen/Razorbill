@@ -7,7 +7,6 @@ import android.support.wearable.complications.ComplicationHelperActivity
 import android.content.ComponentName
 import com.tomtase.razorbill.ConfigurationRecyclerViewAdapter.ComplicationLocation
 import android.app.Activity
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.wearable.complications.ProviderInfoRetriever
 import android.view.View
@@ -29,8 +28,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
     private var defaultComplicationDrawable: Drawable? = null
 
     private var providerInfoRetriever: ProviderInfoRetriever? = null
-    private var mWatchFaceComponentName: ComponentName? = null
-    //private var mContext: Context? = null
+    private var watchFaceComponentName: ComponentName? = null
 
     constructor(view: View) : super(view) {
 
@@ -44,8 +42,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         rightComplication = view.findViewById(R.id.right_complication)
         rightComplication?.setOnClickListener(this)
 
-        //mContext = view.context
-        mWatchFaceComponentName = ComponentName(view.context, "Razorbill")
+        watchFaceComponentName = ComponentName(view.context, Razorbill::class.java!!)
 
         providerInfoRetriever = ProviderInfoRetriever(view.context, Executors.newCachedThreadPool())
         providerInfoRetriever?.init()
@@ -115,15 +112,9 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         button: ImageButton?, background: ImageView?) {
         if (complicationProviderInfo != null) {
             button?.setImageIcon(complicationProviderInfo.providerIcon)
-            /*button.contentDescription = mContext.getString(
-                R.string.edit_complication,
-                complicationProviderInfo.appName + " " +
-                        complicationProviderInfo.providerName
-            )*/
             background?.visibility = View.VISIBLE
         } else {
             button?.setImageDrawable(defaultComplicationDrawable)
-            //button.contentDescription = mContext.getString(R.string.add_complication)
             background?.visibility = View.INVISIBLE
         }
     }
@@ -139,7 +130,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
                     updateComplicationViews(watchFaceComplicationId, complicationProviderInfo)
                 }
             },
-            mWatchFaceComponentName,
+            watchFaceComponentName,
             *complicationIds
         )
     }
