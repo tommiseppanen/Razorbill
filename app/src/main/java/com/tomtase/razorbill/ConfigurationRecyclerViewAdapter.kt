@@ -35,6 +35,10 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         return TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG
     }
 
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        previewViewHolder?.releaseProviderInfoRetriever()
+    }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder.itemViewType) {

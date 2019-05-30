@@ -33,6 +33,11 @@ class ConfigurationActivity : Activity() {
         }
     }
 
+    public override fun onDestroy() {
+        super.onDestroy()
+        recyclerView.adapter = null
+    }
+
     companion object {
         internal const val COMPLICATION_CONFIG_REQUEST_CODE = 1001
     }

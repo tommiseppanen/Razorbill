@@ -54,9 +54,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         providerInfoRetriever?.init()
     }
 
-    /*override*/ fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        //super@PreviewViewHolder.onDetachedFromRecyclerView(recyclerView)
-        // Required to release retriever for active complication data on detach.
+    fun releaseProviderInfoRetriever() {
         providerInfoRetriever?.release()
     }
 
