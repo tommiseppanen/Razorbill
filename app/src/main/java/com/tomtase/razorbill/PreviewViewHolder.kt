@@ -21,9 +21,11 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
 
     private var leftComplicationBackground: ImageView? = null
     private var rightComplicationBackground: ImageView? = null
+    private var bottomComplicationBackground: ImageView? = null
 
     private var leftComplication: ImageButton? = null
     private var rightComplication: ImageButton? = null
+    private var bottomComplication: ImageButton? = null
 
     private var defaultComplicationDrawable: Drawable? = null
 
@@ -41,6 +43,10 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         rightComplicationBackground = view.findViewById(R.id.right_complication_background) as ImageView
         rightComplication = view.findViewById(R.id.right_complication)
         rightComplication?.setOnClickListener(this)
+
+        bottomComplicationBackground = view.findViewById(R.id.bottom_complication_background) as ImageView
+        bottomComplication = view.findViewById(R.id.bottom_complication)
+        bottomComplication?.setOnClickListener(this)
 
         watchFaceComponentName = ComponentName(view.context, Razorbill::class.java!!)
 
@@ -62,6 +68,9 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         } else if (view == rightComplication) {
             val currentActivity = view.context as Activity
             launchComplicationHelperActivity(currentActivity, ComplicationLocation.RIGHT)
+        } else if (view == bottomComplication) {
+            val currentActivity = view.context as Activity
+            launchComplicationHelperActivity(currentActivity, ComplicationLocation.BOTTOM)
         }
     }
 
@@ -88,7 +97,7 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
         }
     }
 
-    fun setDefaultComplicationDrawable(resourceId: Int) {
+    fun initializeComplicationBackgrounds(resourceId: Int) {
         val context = watchFace?.context
         defaultComplicationDrawable = context?.getDrawable(resourceId)
 
@@ -97,6 +106,9 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
 
         rightComplication?.setImageDrawable(defaultComplicationDrawable)
         rightComplicationBackground?.visibility = View.INVISIBLE
+
+        bottomComplication?.setImageDrawable(defaultComplicationDrawable)
+        bottomComplicationBackground?.visibility = View.INVISIBLE
     }
 
     fun updateComplicationViews(watchFaceComplicationId: Int, complicationProviderInfo: ComplicationProviderInfo?) {
@@ -105,6 +117,8 @@ class PreviewViewHolder : RecyclerView.ViewHolder, View.OnClickListener {
             updateComplicationView(complicationProviderInfo, leftComplication, leftComplicationBackground)
         } else if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.RIGHT)) {
             updateComplicationView(complicationProviderInfo, rightComplication, rightComplicationBackground)
+        } else if (watchFaceComplicationId == Razorbill.getComplicationId(ComplicationLocation.BOTTOM)) {
+            updateComplicationView(complicationProviderInfo, bottomComplication, bottomComplicationBackground)
         }
     }
 

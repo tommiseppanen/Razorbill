@@ -40,7 +40,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         when (viewHolder.itemViewType) {
             TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG -> {
                 val previewAndComplicationsViewHolder = viewHolder as PreviewViewHolder
-                previewAndComplicationsViewHolder.setDefaultComplicationDrawable(R.drawable.add_complication)
+                previewAndComplicationsViewHolder.initializeComplicationBackgrounds(R.drawable.add_complication)
                 previewAndComplicationsViewHolder.initializeComplications()
             }
 

@@ -26,12 +26,10 @@ class ConfigurationActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
 
         if (requestCode == COMPLICATION_CONFIG_REQUEST_CODE && resultCode == RESULT_OK) {
-
             val complicationProviderInfo =
                 data.getParcelableExtra<ComplicationProviderInfo>(ProviderChooserIntent.EXTRA_PROVIDER_INFO)
 
             adapter!!.updateSelectedComplication(complicationProviderInfo)
-
         }
     }
 
