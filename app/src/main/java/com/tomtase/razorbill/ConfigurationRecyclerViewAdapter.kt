@@ -16,27 +16,18 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         LEFT
     }
 
-    //private val settings: ArrayList<ConfigItemType>? = null
     private var previewViewHolder: PreviewViewHolder? = null
 
     override fun getItemCount(): Int {
-        /*if (settings != null) {
-            return settings.count()
-        }
-        return 0*/
         return 1
     }
 
     override fun getItemViewType(position: Int): Int {
-        //val configItemType = settings.get(position)
-        //return configItemType.getConfigType()
         return TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG
     }
 
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        //val configItemType = settings.get(position)
-
         when (viewHolder.itemViewType) {
             TYPE_PREVIEW_AND_COMPLICATIONS_CONFIG -> {
                 val previewAndComplicationsViewHolder = viewHolder as PreviewViewHolder
@@ -61,7 +52,7 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                 previewViewHolder = PreviewViewHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(
-                            R.layout.config_list_preview,
+                            R.layout.configuration_layout,
                             parent,
                             false
                         )
@@ -70,6 +61,6 @@ class ConfigurationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
         return PreviewViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.config_list_preview, parent, false))
+                .inflate(R.layout.configuration_layout, parent, false))
     }
 }
